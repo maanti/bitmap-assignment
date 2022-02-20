@@ -1,4 +1,4 @@
-import { Point } from './distance-finder';
+import { Point } from './DistanceFinder';
 
 type Queue = Array<Point>;
 

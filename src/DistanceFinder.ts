@@ -1,4 +1,4 @@
-import PointsQueue from './points-queue';
+import PointsQueue from './PointsQueue';
 
 enum Pixel {
     Black = 0,

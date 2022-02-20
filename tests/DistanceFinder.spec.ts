@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import DistanceFinder from '../src/distance-finder';
+import DistanceFinder from '../src/DistanceFinder';
 
 describe('should return expected result', () => {
   [

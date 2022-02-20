@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import PointsQueue from '../src/points-queue';
+import PointsQueue from '../src/PointsQueue';
 
 describe('PointsQueue', () => {
   it('should return elements added by push in FIFO order', () => {
