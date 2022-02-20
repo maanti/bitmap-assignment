@@ -32,7 +32,7 @@ async function main(): Promise<void> {
   for (const bitMap of bitMaps) {
     const distanceFinder = new DistanceFinder(bitMap);
     const distances = distanceFinder.getDistances();
-    StdoutOutput.printDistances(distances);
+    StdoutOutput.printDistanceMap(distances);
   }
 }
 
