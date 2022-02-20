@@ -5,26 +5,24 @@ import StdinInput from './io/StdinInput';
 import Input from './io/Input';
 import StdoutOutput from './io/StdoutOutput';
 
-program.option('-f, --file <string>');
-program.parse();
-const options = program.opts();
+function getCommandLineArgs() {
+  program.option('-f, --file <string>');
+  program.parse();
+  return program.opts();
+}
 
 async function main() {
-  let input: Input;
+  const options = getCommandLineArgs();
 
-  if (options.file) {
-    input = new FileInput(options.file);
-  } else {
-    input = new StdinInput();
-  }
+  const input: Input = options.file ? new FileInput(options.file) : new StdinInput();
 
   const bitMaps: BitMap[] = await input.readInputData();
-  // Find distances and print them to stdout
-  bitMaps.forEach((bitMap) => {
+
+  for (const bitMap of bitMaps) {
     const distanceFinder = new DistanceFinder(bitMap);
     const distances = distanceFinder.getDistances();
     StdoutOutput.printDistances(distances);
-  });
+  }
 }
 
 (async () => {

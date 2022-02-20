@@ -1,5 +1,7 @@
 import { expect } from 'chai';
 import DistanceFinder from '../src/DistanceFinder';
+import BitMap from '../src/lib/BitMap';
+import DistanceMap from '../src/lib/DistanceMap';
 
 describe('should return expected result', () => {
   [
@@ -65,11 +67,14 @@ describe('should return expected result', () => {
     const n = input.length;
     const m = input[0].length;
     it(`for matrix ${n}x${m} ${JSON.stringify(input)} result should be equal to ${JSON.stringify(expectedResult)}`, () => {
+      // Arrange
+      const bitMap = new BitMap(n, m, input);
+
       // Act
-      const distanceFinder = new DistanceFinder(input);
+      const distanceFinder = new DistanceFinder(bitMap);
 
       // Assert
-      expect(distanceFinder.getDistances()).to.deep.equal(expectedResult);
+      expect(distanceFinder.getDistances()).to.deep.equal(new DistanceMap(expectedResult));
     });
   });
 });

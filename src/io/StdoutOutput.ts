@@ -1,11 +1,11 @@
-import { Distances } from '../DistanceFinder';
+import DistanceMap from '../lib/DistanceMap';
 
 class StdoutOutput {
-  public static printDistances(distances: Distances): void {
+  public static printDistances(distanceMap: DistanceMap): void {
     process.stdout.write('\n');
-    for (let i = 0; i < distances.length; i++) {
-      for (let j = 0; j < distances[0].length; j++) {
-        process.stdout.write(`${distances[i][j]} `);
+    for (let i = 0; i < distanceMap.getNDimension(); i++) {
+      for (let j = 0; j < distanceMap.getMDimension(); j++) {
+        process.stdout.write(`${distanceMap.getDistance(i, j)} `);
       }
       process.stdout.write('\n');
     }

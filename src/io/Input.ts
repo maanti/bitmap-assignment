@@ -1,19 +1,16 @@
 import readline, { Interface } from 'readline';
-import { BitMap, Pixel } from '../DistanceFinder';
+import { Pixel } from '../DistanceFinder';
 import ReadableStream = NodeJS.ReadableStream;
+import BitMap from '../lib/BitMap';
 
 class Input {
-  private numberOfCases: number = NaN;
-
-  private bitMapN: number = NaN;
-
-  private bitMapM: number = NaN;
+  private bitMap: BitMap;
 
   private bitMaps: BitMap[] = [];
 
-  private bitMap: BitMap = [];
-
   private linesCount = 0;
+
+  private numberOfCases: number = NaN;
 
   private rl: Interface;
 
@@ -22,6 +19,7 @@ class Input {
       input: inputStream,
       output: process.stdout,
     });
+    this.bitMap = new BitMap();
   }
 
   private setNumberOfCases(line: string) {
@@ -29,20 +27,22 @@ class Input {
   }
 
   private setBitMapDimensions(line: string) {
-    [this.bitMapN, this.bitMapM] = line.split(/\s+/).map(Number);
+    const [n, m] = line.split(/\s+/).map(Number);
+    this.bitMap.setNDimension(n);
+    this.bitMap.setMDimension(m);
   }
 
   private setBitMapRow(line: string) {
     // Collect lines and build bitMap
     this.linesCount++;
-    this.bitMap.push(line.split('')
+    this.bitMap.addRow(line.split('')
       .map((pixel) => (pixel === '1' ? Pixel.White : Pixel.Black)));
   }
 
   private finalizeBitMap() {
     // Test case ended, reset variables and push bitMap to bitMaps
     this.bitMaps.push(this.bitMap);
-    this.bitMap = [];
+    this.bitMap = new BitMap();
     this.linesCount = 0;
   }
 
@@ -54,12 +54,11 @@ class Input {
     const lineTrimmed = line.trim();
     if (!this.numberOfCases) {
       this.setNumberOfCases(lineTrimmed);
-    } else if (!this.bitMapN && !this.bitMapM) {
+    } else if (!this.bitMap.getNDimension() && !this.bitMap.getMDimension()) {
       this.setBitMapDimensions(lineTrimmed);
     } else if (line === '') {
-      // To be able to end console input by typing Enter
       this.close();
-    } else if (this.linesCount < this.bitMapN) {
+    } else if (this.linesCount < this.bitMap.getNDimension()) {
       this.setBitMapRow(line);
     } else {
       this.finalizeBitMap();
@@ -67,12 +66,11 @@ class Input {
     }
   }
 
-  public readInputData(): Promise<BitMap[]> {
+  public async readInputData(): Promise<BitMap[]> {
     return new Promise((resolve, reject) => {
       this.rl
-        .on('line', this.handleLine)
+        .on('line', this.handleLine.bind(this))
         .on('close', () => {
-          // Push the latest bitMap
           this.finalizeBitMap();
           resolve(this.bitMaps);
         })
