@@ -26,5 +26,7 @@ npm test
 - For each element of the queue compute distances to the neighbours and push neighbours to the queue
 - When the queue becomes empty - all the pixels are handled
 
+## Example
+![Algorithm visualization](https://i.imgur.com/TZkSqc2.png)
 ## Used versions
 NodeJS - v16.14.0
