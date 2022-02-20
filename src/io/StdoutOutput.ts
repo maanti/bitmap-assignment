@@ -11,13 +11,13 @@ class StdoutOutput {
     distanceMap: DistanceMap,
     out: WritableStream = process.stdout,
   ): void {
-    out.write('\n');
     for (let i = 0; i < distanceMap.getNDimension(); i++) {
       for (let j = 0; j < distanceMap.getMDimension(); j++) {
         out.write(`${distanceMap.getDistance(i, j)} `);
       }
       out.write('\n');
     }
+    out.write('\n');
   }
 }
 

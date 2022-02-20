@@ -3,7 +3,7 @@ import BitMap from './lib/BitMap';
 import DistanceMap from './lib/DistanceMap';
 
 enum Pixel {
-    Black = 0,
+    Black,
     White
 }
 

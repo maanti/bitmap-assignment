@@ -18,7 +18,7 @@ describe('StdoutOutput', () => {
 
     // Assert
     setImmediate(() => {
-      expect(input).to.eq('\n1 2 \n3 4 \n');
+      expect(input).to.equal('1 2 \n3 4 \n\n');
       done();
     });
   });
