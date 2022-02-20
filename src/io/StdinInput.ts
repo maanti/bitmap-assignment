@@ -1,8 +1,9 @@
+import { ReadStream } from 'fs';
 import Input from './Input';
 
 class StdinInput extends Input {
-  constructor() {
-    super(process.stdin);
+  constructor({ readStream }: {readStream?: ReadStream} = {}) {
+    super(readStream || process.stdin);
   }
 }
 
