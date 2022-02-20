@@ -13,13 +13,13 @@ type Point = {
 }
 
 class DistanceFinder {
-  private readonly bitMap: BitMap;
-
-  private readonly distanceMap: DistanceMap;
+  private areDistancesComputed: boolean = false;
 
   private pointsQueue: PointsQueue;
 
-  private areDistancesComputed: boolean = false;
+  private readonly bitMap: BitMap;
+
+  private readonly distanceMap: DistanceMap;
 
   constructor(bitMap: BitMap) {
     this.bitMap = bitMap;
@@ -33,9 +33,10 @@ class DistanceFinder {
   }
 
   /**
-     * Returns distances matrix for the bitmap.
-     * If already computed - returns cached value
-     */
+   * Returns distances matrix for the bitmap.
+   * If already computed - returns cached value
+   * @return DistanceMap
+   */
   public getDistances(): DistanceMap {
     if (!this.areDistancesComputed) {
       this.computeDistances();
@@ -47,9 +48,10 @@ class DistanceFinder {
   /**
    * Calculate distances from each back pixel to the nearest white pixel
    * @private
+   * @return DistanceMap
    */
   private computeDistances(): DistanceMap {
-    // Push all white points to the queue
+    // Push all white pixels to the queue
     for (let i = 0; i < this.bitMap.getNDimension(); i++) {
       for (let j = 0; j < this.bitMap.getMDimension(); j++) {
         if (this.bitMap.getPixel(i, j) === Pixel.White) {
@@ -58,9 +60,10 @@ class DistanceFinder {
       }
     }
 
+    // Traverse bitMap starting from white pixes and going breadth-first
     this.traverseBitMap();
 
-    // Flag that signalizes that we already have distances computed and can use cache
+    // Set flag to show that distances are already computed and cache can be used
     this.areDistancesComputed = true;
 
     return this.distanceMap;
@@ -71,7 +74,7 @@ class DistanceFinder {
    * and going through all the pixels
    * @private
    */
-  private traverseBitMap() {
+  private traverseBitMap(): void {
     while (this.pointsQueue.size() > 0) {
       const { x, y } = this.pointsQueue.shift();
 
@@ -92,7 +95,7 @@ class DistanceFinder {
    * @param {number} distance
    * @private
    */
-  private addDistance(x: number, y: number, distance: number) {
+  private addDistance(x: number, y: number, distance: number): void {
     const isXOutOfBounds = (x < 0) || (x >= this.bitMap.getNDimension());
     const isYOutOfBounds = (y < 0) || (y >= this.bitMap.getMDimension());
 

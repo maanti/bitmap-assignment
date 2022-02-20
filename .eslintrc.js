@@ -33,6 +33,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error'],
     'no-plusplus': 'off',
     'no-restricted-syntax': ['error', 'ForInStatement', 'LabeledStatement', 'WithStatement'],
+    '@typescript-eslint/member-ordering': ['error'],
   },
   settings: {
     'import/resolver': {

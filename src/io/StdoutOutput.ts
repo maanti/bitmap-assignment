@@ -1,6 +1,10 @@
 import DistanceMap from '../lib/DistanceMap';
 
 class StdoutOutput {
+  /**
+   * Writes 2D array with distances to the standard output
+   * @param {DistanceMap} distanceMap
+   */
   public static printDistances(distanceMap: DistanceMap): void {
     process.stdout.write('\n');
     for (let i = 0; i < distanceMap.getNDimension(); i++) {

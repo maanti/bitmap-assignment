@@ -5,7 +5,7 @@ type Queue = Array<Point>;
 class PointsQueue {
   private queue: Queue = [];
 
-  public push(point: Point) {
+  public push(point: Point): void {
     this.queue.push(point);
   }
 

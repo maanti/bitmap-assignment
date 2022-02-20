@@ -1,20 +1,31 @@
-import { program } from 'commander';
+import { OptionValues, program } from 'commander';
 import DistanceFinder, { BitMap } from './DistanceFinder';
 import FileInput from './io/FileInput';
 import StdinInput from './io/StdinInput';
 import Input from './io/Input';
 import StdoutOutput from './io/StdoutOutput';
 
-function getCommandLineArgs() {
+/**
+ * Parses and returns command-line arguments
+ */
+function getCommandLineArgs(): OptionValues {
   program.option('-f, --file <string>');
   program.parse();
   return program.opts();
 }
 
-async function main() {
-  const options = getCommandLineArgs();
+/**
+ * Returns either FileInput or StdinInput depending on whether --file key was used
+ * @return Input
+ */
+function getInput(): Input {
+  const { file: fileName } = getCommandLineArgs();
 
-  const input: Input = options.file ? new FileInput(options.file) : new StdinInput();
+  return fileName ? new FileInput(fileName) : new StdinInput();
+}
+
+async function main(): Promise<void> {
+  const input = getInput();
 
   const bitMaps: BitMap[] = await input.readInputData();
 

@@ -3,39 +3,39 @@ import { Pixel } from '../DistanceFinder';
 type BitMapData = Array<Array<Pixel>>;
 
 class BitMap {
-  private n: number;
+  private nDimension: number;
 
-  private m: number;
+  private mDimension: number;
 
   private readonly data: BitMapData;
 
-  constructor(n?: number, m?: number, data?: BitMapData) {
-    this.n = n || NaN;
-    this.m = m || NaN;
+  constructor(nDimension?: number, mDimension?: number, data?: BitMapData) {
+    this.nDimension = nDimension || NaN;
+    this.mDimension = mDimension || NaN;
     this.data = data || [];
   }
 
-  public getPixel(i: number, j: number) {
+  public getPixel(i: number, j: number): Pixel {
     return this.data[i][j];
   }
 
-  public setNDimension(n: number) {
-    this.n = n;
+  public setNDimension(nDimension: number): void {
+    this.nDimension = nDimension;
   }
 
-  public getNDimension() {
-    return this.n;
+  public getNDimension(): number {
+    return this.nDimension;
   }
 
-  public setMDimension(m: number) {
-    this.m = m;
+  public setMDimension(mDimension: number): void {
+    this.mDimension = mDimension;
   }
 
-  public getMDimension() {
-    return this.m;
+  public getMDimension(): number {
+    return this.mDimension;
   }
 
-  public addRow(row: number[]) {
+  public addRow(row: number[]): void {
     this.data.push(row);
   }
 }

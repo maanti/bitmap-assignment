@@ -6,24 +6,28 @@ type DistanceData = Array<Array<number>>;
 class DistanceMap {
   private readonly data: DistanceData;
 
-  public static createInstance(n: number, m: number, { fillWith }: {fillWith: any}) {
-    return new DistanceMap(new Array(n)
-      .fill(0)
-      .map(
-        () => new Array(m)
-          .fill(fillWith),
-      ));
-  }
-
   constructor(data?: DistanceData) {
     this.data = data || [];
   }
 
-  public setDistance(i: number, j: number, value: number) {
+  public static createInstance(
+    nDimension: number,
+    mDimension: number,
+    { fillWith }: {fillWith: number},
+  ): DistanceMap {
+    return new DistanceMap(new Array(nDimension)
+      .fill(0)
+      .map(
+        () => new Array(mDimension)
+          .fill(fillWith),
+      ));
+  }
+
+  public setDistance(i: number, j: number, value: number): void {
     this.data[i][j] = value;
   }
 
-  public getDistance(i: number, j: number) {
+  public getDistance(i: number, j: number): number {
     return this.data[i][j];
   }
 
@@ -35,7 +39,7 @@ class DistanceMap {
     return this.data[0] && this.data[0].length;
   }
 
-  public initialize(bitMap: BitMap) {
+  public initialize(bitMap: BitMap): void {
     for (let i = 0; i < bitMap.getNDimension(); i++) {
       for (let j = 0; j < bitMap.getMDimension(); j++) {
         if (bitMap.getPixel(i, j) === Pixel.White) {
