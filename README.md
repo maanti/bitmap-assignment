@@ -13,7 +13,7 @@ npm start
 npx ts-node src/main.ts --file 'input.txt'
 ```
 
-# Tests
+## Tests
 ```shell
 npm test
 ```
